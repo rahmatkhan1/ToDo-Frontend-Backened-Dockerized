@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #d0eaff, #a0d8ff, #80cfff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    .form-container h2 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .form-container input, 
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .form-container input:focus {
+      border-color: #80cfff;
+      outline: none;
+    }
+
+    .form-container button {
+      background: #66a6ff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .form-container button:hover {
+      background: #4d94e9;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Add To-Do Item</h2>
+    <form action="http://localhost:5000/submit" method="POST">
+  <label>Item ID:</label>
+  <input type="text" name="item_id"><br>
+
+  <label>Item UUID:</label>
+  <input type="text" name="item_uuid"><br>
+
+  <label>Item Hash:</label>
+  <input type="text" name="item_hash"><br>
+
+  <button type="submit">Submit</button>
+</form>
+
+  </div>
+</body>
+</html>
