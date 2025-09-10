@@ -1,0 +1,8 @@
+version: '3'
+services:
+  backend:
+    build: ./Backend
+    container_name: todo-backend
+    ports:
+      - "5000:5000"
+    restart: always
