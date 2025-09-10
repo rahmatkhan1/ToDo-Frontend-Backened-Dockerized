@@ -1,0 +1,10 @@
+version: '3'
+services:
+  frontend:
+    build: ./Frontend
+    container_name: todo-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - API_URL=http://<BACKEND-EC2-PUBLIC-IP>:5000
+    restart: always
