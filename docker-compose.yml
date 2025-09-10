@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   backend:
-    build: ./backend
+    build: ./Backend
     container_name: todo-backend
     ports:
       - "5000:5000"
@@ -10,7 +10,7 @@ services:
       - todo-network
 
   frontend:
-    build: ./frontend
+    build: ./Frontend
     container_name: todo-frontend
     ports:
       - "3000:3000"
