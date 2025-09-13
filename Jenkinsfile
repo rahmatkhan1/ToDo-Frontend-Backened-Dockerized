@@ -1,22 +1,37 @@
 pipeline {
     agent any
+
+    tools {
+        python 'Python3'
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/<tumhara-username>/<flask-repo>.git'
+                git branch: 'main', url: 'https://github.com/rahmatkhan1/ToDo-Frontend-Backened-Dockerized.git'
             }
         }
+
         stage('Install Dependencies') {
             steps {
-                sh 'python3 -m venv venv'
-                sh '. venv/bin/activate && pip install -r requirements.txt'
+                sh '''
+                python3 -m venv venv
+                . venv/bin/activate
+                pip install -r requirements.txt
+                '''
             }
         }
-        stage('Run Flask App') {
+
+        stage('Run Flask with PM2') {
             steps {
                 sh '''
-                pkill -f flask || true
-                nohup venv/bin/python app.py > flask.log 2>&1 &
+                # Install pm2 if not already installed
+                sudo npm install -g pm2 || true
+                
+                # Start or restart the Flask app
+                . venv/bin/activate
+                pm2 start app.py --name flask-backend --interpreter python3 || pm2 restart flask-backend
+                pm2 save
                 '''
             }
         }
