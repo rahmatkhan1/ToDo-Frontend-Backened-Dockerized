@@ -1,15 +1,15 @@
 pipeline {
     agent any
     stages {
-        stage('Install') {
+        stage('Install dependencies') {
             steps {
                 sh 'python3 --version'
                 sh 'pip3 install -r requirements.txt'
             }
         }
-        stage('Run') {
+        stage('Run Flask App') {
             steps {
-                sh 'python3 app.py &'
+                sh 'nohup python3 app.py &'
             }
         }
     }
