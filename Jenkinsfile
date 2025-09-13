@@ -1,20 +1,13 @@
 pipeline {
     agent any
-
-   
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/rahmatkhan1/ToDo-Frontend-Backened-Dockerized.git'
-            }
-        }
-
-        stage('Install Dependencies') {
+        stage('Install Flask Dependencies') {
             steps {
                 sh '''
-                python3 -m venv venv
-                . venv/bin/activate
-                pip install -r requirements.txt
+                  cd Backend
+                  python3 -m venv venv
+                  . venv/bin/activate
+                  pip install -r requirements.txt
                 '''
             }
         }
@@ -22,13 +15,26 @@ pipeline {
         stage('Run Flask with PM2') {
             steps {
                 sh '''
-                # Install pm2 if not already installed
-                sudo npm install -g pm2 || true
-                
-                # Start or restart the Flask app
-                . venv/bin/activate
-                pm2 start app.py --name flask-backend --interpreter python3 || pm2 restart flask-backend
-                pm2 save
+                  cd Backend
+                  pm2 start app.py --name flask-backend --interpreter python3 || pm2 restart flask-backend
+                '''
+            }
+        }
+
+        stage('Install Frontend Dependencies') {
+            steps {
+                sh '''
+                  cd Frontend
+                  npm install
+                '''
+            }
+        }
+
+        stage('Run Frontend with PM2') {
+            steps {
+                sh '''
+                  cd Frontend
+                  pm2 start server.js --name express-frontend --interpreter node || pm2 restart express-frontend
                 '''
             }
         }
