@@ -22,13 +22,27 @@ pipeline {
         }
 
         stage('Install Frontend Dependencies') {
-            steps {
+    steps {
+        dir('Frontend') {
+            // Retry up to 3 times in case of network issues
+            retry(3) {
                 sh '''
-                  cd Frontend
-                  npm install
+                    # Set npm registry to the official one (bypass mirror/proxy issues)
+                    npm config set registry https://registry.npmjs.org/
+
+                    # Optional: increase network timeout
+                    npm config set fetch-retries 5
+                    npm config set fetch-retry-factor 2
+                    npm config set fetch-retry-mintimeout 20000
+                    npm config set fetch-retry-maxtimeout 120000
+
+                    npm install
                 '''
             }
         }
+    }
+}
+
 
         stage('Run Frontend with PM2') {
             steps {
